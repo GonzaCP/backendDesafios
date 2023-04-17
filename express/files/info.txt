@@ -1,0 +1,33 @@
+clase 6 ---> NPM
+npm i bcrypt ---> Para hashear los password
+
+
+-------------------- °°°°°°° -----------------------
+
+
+clase 7 ---> Servidores Web
+Express ---> Framework adecuado para desarrollar servidores complejos con javascript
+
+Protocolo http
+Libreria express
+
+npm i -g nodemon ---> para ver los cambios que se van produciendo en el mismo instante
+"-g" ---> instalación global
+
+- extensión Json view en chrom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------- °°°°°°° -----------------------

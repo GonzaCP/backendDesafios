@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Red Hot Chili Peppers",
+    "description": "Funky Style",
+    "price": 55200,
+    "thumbnail": "Url1",
+    "code": "RHCP45",
+    "stock": 8000,
+    "id": 0
+  },
+  {
+    "title": "Pink Floyd",
+    "description": "Acid Barret",
+    "price": 50000,
+    "thumbnail": "Url2",
+    "code": "PINK57",
+    "stock": 79000,
+    "id": 1
+  },
+  {
+    "title": "Greta Van Fleet",
+    "description": "The new Zepellin's",
+    "price": 60000,
+    "thumbnail": "Url3",
+    "code": "GRETA257",
+    "stock": 89000,
+    "id": 2
+  }
+]
