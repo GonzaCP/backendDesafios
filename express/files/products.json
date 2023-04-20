@@ -25,5 +25,14 @@
     "code": "GRETA257",
     "stock": 89000,
     "id": 2
+  },
+  {
+    "title": "Queen",
+    "description": "Queen age",
+    "price": 689,
+    "thumbnail": "URL4",
+    "code": "QUEEN751",
+    "stock": 10000,
+    "id": 3
   }
 ]

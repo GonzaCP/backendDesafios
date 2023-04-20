@@ -18,6 +18,9 @@ npm i -g nodemon ---> para ver los cambios que se van produciendo en el mismo in
 
 clase 8 ---> Express avanzado
 
+Métodos http ---> Get, Post, Put, Delete
+
+Clase 9 ---> Router y Multer
 
 
 

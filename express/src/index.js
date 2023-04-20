@@ -1,9 +1,10 @@
 import express from "express"
 
 const app = express()
-const PORT = 8080
+const PORT = 9090
 
 //middleware para capturar datos complejos desde la url ---> req.query
+app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 // Ejemplo de req.query
@@ -15,51 +16,81 @@ app.get("/ejemploQueries/query", (req, res) => {
 })
 
 
-// EJEMPLO DE ENVÍO DE INFO JSON
-// app.get('/saludo', (req, res) => {
-//     res.send({ nombre: "juan" })
-// })
-
-app.get('/saludo', (req, res) => {
-    res.send("Holaaa novato ")
-})
-
-app.get('/bienvenida', (req, res) => {
-    res.send({
-        nombre: "juan",
-        edad: 15
-    })
-})
-
 app.get("/usuario/:nombre/:apellido", (req, res) => {
     console.log(req.params)
     res.send(`Tu nombre completo es: ${req.params.nombre} ${req.params.apellido}`)
 })
 
-const usuarios = [
-    { id: "1", nombre: "Carlos", apellido: "Esteban", edad: "15"},
-    { id: "2", nombre: "Pincho", apellido: "Sate", edad: "21"},
-    { id: "3", nombre: "Carcha", apellido: "Do", edad: "52"}
-]
 
-app.get("/", (req, res) => {
-    res.send(usuarios)
+
+
+
+
+
+
+
+//                  EJEMPLO USO DE POSTMAN
+
+let users = []
+
+app.get("/api/users", (req, res) => {  
+    res.send(users)
 })
 
-app.get("/:userId", (req, res) => {
-    const usuario = usuarios.find(u => u.id === req.params.userId)
-    if(usuario) {
-        res.send(usuario)
+
+
+app.post('/api/users', (req, res) => {
+    let user = req.body    
+
+    // asignacion de ID
+    const numRamdom = Math.floor(Math.random() * 20 + 1)
+    user.id = numRamdom + users.length
+
+
+    if (!user.first_name || !user.last_name) {
+        return res.status(400).send({ status: "error", msg: "valores incompletos, revisar datos de entrada!!" })
     }
-    res.send({ message: "Usuario no encontrado!"})
-
+    users.push(user)
+    res.send({ status: "success", msg: 'Usuario Creado!' })
 })
 
 
+// en POSTMAN hay que pasarle todo el objeto completo (ioncluido el id) y el id también escribirlo en la url de postman ---> :userId
+app.put('/api/users/:userId', (req, res) => {
+    let userId = parseInt(req.params.userId)
+    let userUpdated = req.body
+
+    const userPosition = users.findIndex((u => u.id === userId))
+    if (userPosition < 0) {
+        return res.status(202).send({ status: "info", error: "Usuario no encontrado" })
+    }
+    users[userPosition] = userUpdated
 
 
 
+    res.send({ status: "success", msg: 'Usuario modificado!', data: users[userPosition] })
+})
 
+
+// solo hay que escribir el id que queremos eliminar en la url de postman ---> :userId
+app.delete('/api/users/:userId', (req, res) => {
+    let userId = parseInt(req.params.userId)
+
+    const usersSize = users.length
+
+    const userPosition = users.findIndex((u => u.id === userId))
+    if (userPosition < 0) {
+        return res.status(202).send({ status: "Error", error: "Usuario no encontrado" })
+    }
+
+    users.splice(userPosition, 1)
+    if (users.length === usersSize) {
+        return res.status(500).send({ status: "error", error: "Usuario no se puede borrar." })
+    }
+
+    res.send({ status: "Success", msg: "Usuario ELIMINADO."})
+
+})
 
 
 

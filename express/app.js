@@ -10,6 +10,7 @@ app.use(express.urlencoded({extended:true}))
 
 const productos = new ProductManager("/products.json")
 
+
 app.get('/', (req, res) => {
     res.send("Holaaa novato")
 })

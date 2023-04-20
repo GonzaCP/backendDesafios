@@ -7,9 +7,7 @@ class ProductManager {
         this.dirName = './files'
         this.fileName = this.dirName + path              
         this.fs = fs
-    }
-
-    static id = 0
+    }   
 
     creoArchivo = async() => {       
         try {
@@ -33,13 +31,13 @@ class ProductManager {
             price: price,
             thumbnail: thumbnail,
             code: code,
-            stock: stock,
-            id: ProductManager.id++
+            stock: stock,     
         }
 
         try {
             let readProduct = await this.fs.promises.readFile(this.fileName, "utf-8")          
             let readProductParse = JSON.parse(readProduct)
+            product.id = readProductParse[readProductParse.length - 1].id  + 1
             let busquedaCode = readProductParse.some((product => product.code === code))
             if(busquedaCode) {
                 throw Error ("Mismo código")
@@ -73,17 +71,20 @@ class ProductManager {
         } 
     }
 
-    updateProduct = async(id, data) => {
+    updateProduct = async(id, updateData) => {
         try {
             let readProduct = await this.fs.promises.readFile(this.fileName, "utf-8")  
             let readProductParse = JSON.parse(readProduct)  
-            let busquedaCode = readProductParse.find((product => product.id === id))   
-            if (busquedaCode) {                  
-               busquedaCode.title = data               
-               await fs.promises.writeFile(this.fileName, JSON.stringify(readProductParse, null, 2))                      
-            } else {
-                throw Error ("El id recibido no coincide")
+
+            const index = readProductParse.findIndex(product => product.id === id)
+            if(index === -1) {
+                throw new Error (`Product with id ${id} not found`)
             }
+            const updateProduct = {...readProductParse[index], ...updateData, id}
+            readProductParse.splice(index, 1, updateProduct)
+
+            await fs.promises.writeFile(this.fileName, JSON.stringify(readProductParse, null, 2))                
+            
         } catch {
             throw Error ("El id recibido no coincide")
         }
