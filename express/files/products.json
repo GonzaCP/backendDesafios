@@ -1,7 +1,7 @@
 [
   {
     "title": "Red Hot Chili Peppers",
-    "description": "Funky Style",
+    "description": "Funky Style Frusciante's and Flea's influence's",
     "price": 55200,
     "thumbnail": "Url1",
     "code": "RHCP45",
@@ -27,12 +27,30 @@
     "id": 2
   },
   {
-    "title": "Queen",
-    "description": "Queen age",
-    "price": 689,
-    "thumbnail": "URL4",
-    "code": "QUEEN751",
-    "stock": 10000,
+    "title": "El Kuelgue",
+    "description": "divina comedia",
+    "price": 500,
+    "thumbnail": "Url4",
+    "code": "KUEL163",
+    "stock": 7000,
     "id": 3
+  },
+  {
+    "title": "Él mató un policia motorizado",
+    "description": "Gorriti",
+    "price": 600,
+    "thumbnail": "Url5",
+    "code": "MOT513",
+    "stock": 10000,
+    "id": 4
+  },
+  {
+    "title": "Kapanga",
+    "description": "The ramones style",
+    "price": 100,
+    "thumbnail": "Url6",
+    "code": "KAP513",
+    "stock": 15000,
+    "id": 5
   }
 ]

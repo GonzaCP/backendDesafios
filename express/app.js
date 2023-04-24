@@ -1,5 +1,7 @@
 import express from "express"
-import ProductManager from "./service/ProductManager.js";
+import productsRoutes from "./src/routes/products.routes.js"
+import cartsRoutes from "./src/routes/carts.routes.js"
+import __dirname from "./utils.js"
 
 const app = express()
 const PORT = 8080
@@ -8,40 +10,19 @@ const PORT = 8080
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
-const productos = new ProductManager("/products.json")
+app.use('/api/products', productsRoutes)
+app.use('/api/carts', cartsRoutes)
+// RUTA ABSOLUTA
+//app.use(express.static(__dirname + "public"))
+
+
 
 
 app.get('/', (req, res) => {
     res.send("Holaaa novato")
 })
 
-app.get('/products', async(req, res) => {
-    try {      
-        const products = await productos.getProducts()       
-        res.send(products)          
-        // const limit = req.query.limit 
-        // if(limit) {
-        //     const products = await productos.getProducts().slice(0, parseInt(limit))
-        //     res.send(products)
-        // } else {
-        //     res.send(productos.getProducts())
-        // }        
-    } catch {
-        res.send({ message: "No se encuentran productos en la base de datos."})
-    }    
-})
 
-
-app.get('/products/:pid', async(req, res) => {
-    try {
-        const product = await productos.getProductById(parseInt(req.params.pid))
-        if(product) {
-            res.send(product)
-        }       
-    } catch {
-        res.send({ message: "El id ingresado NO coincide con ningún producto agregado!"})    
-    } 
-})
 
 
 
@@ -52,5 +33,5 @@ app.get('/products/:pid', async(req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(`Server escuchando a través del puerto ${PORT}`)
+    console.log(`Server escuchando a través del puerto ${PORT}`)  
 })
