@@ -21,34 +21,6 @@ pathValidation("./files/carts.json")
 const carts = new CartManager("/carts.json")
 const products = new ProductManager("/products.json")
 
-//console.log(carts.getProductsByIdCart(0))
-
-//proof
-router.get('/:cid/product/:pid', async(req, res) => {
-    
-    try {
-        const carritoId = await carts.getProductsByIdCart(parseInt(req.params.cid))
-        const productId = await products.getProductById(parseInt(req.params.pid))
-        
-        if(!carritoId) {          
-            res.status(202).send({ status: "ERROR", error: `el id: ${cid} no coincide.` })
-        }
-
-        res.send(productId)
-    } catch (error) {
-        return res.status(202).send({ status: "ERROR", error: "PRODUCTO NO ENCONTRADO" })
-    }
-    
-
-
-})
-
-
-
-
-
-
-
 
 router.post('/', async(req, res) => {
     await carts.addCart()
@@ -71,25 +43,25 @@ router.get('/:cid', async(req, res) => {
 
 })
 
-// router.post('/:cid/product/:pid', async(req, res) => {
+router.post('/:cid/product/:pid', async(req, res) => {
     
-//     try {
-//         const carritoId = await carts.getProductsByIdCart(parseInt(req.params.cid))
-//         const productId = await products.getProductById(parseInt(req.params.pid))
+    try {
+        const carritoId = await carts.addProductToCart(parseInt(req.params.cid), parseInt(req.params.pid))        
         
-//         if(!carritoId || productId) {
+        if(!carritoId) {
           
-//             res.status(202).send({ status: "ERROR", error: `el id: ${cid} no coincide.` })
-//         }
+            res.status(202).send({ status: "ERROR", error: `el id: ${cid} no coincide.` })
+        }
 
-//         //res.send(productId)
-//     } catch (error) {
-//         return res.status(202).send({ status: "ERROR", error: "PRODUCTO NO ENCONTRADO" })
-//     }
+        res.status(201).send({mensaje: "Producto agregado con éxito!"});     
+
+    } catch (error) {
+        return res.status(202).send({ status: "ERROR", error: "error" })
+    }
     
 
 
-// })
+})
 
 
 

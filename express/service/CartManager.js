@@ -1,4 +1,7 @@
 import fs from 'fs'
+import ProductManager from './ProductManager.js'
+
+const products = new ProductManager("/products.json")
 
 
 class CartManager {  
@@ -43,7 +46,7 @@ class CartManager {
         }        
     }
     
-    addProductToCart = async(idCart) => {
+    addProductToCart = async(idCart, idProd) => {
         try {
             let readCart = await this.fs.promises.readFile(this.fileName, "utf-8")          
             let readCartParse = JSON.parse(readCart)
@@ -52,40 +55,28 @@ class CartManager {
                 throw Error ("id not found")                
             } 
 
-            console.log(`Encontré el id: ${idCart}`)
+            let findProduct = await products.getProductById(idProd)
+            if(!findProduct) {
+                throw Error ("idPro not found")
+            }                   
+
+            let onlyOne = findProduct.title
+            let newProduct = {
+                quantity: 1,
+                product: onlyOne
+            }           
             
 
-            // let newProduct = {
-            //     quantity: 1,
-            //     id: 1
-            // }
-          
-
-               
+            findId.products.push(newProduct)
+            await fs.promises.writeFile(this.fileName, JSON.stringify(readCartParse, null, 2))                                   
           
             } catch (error) {
                 throw Error (`El id recibido no coincide: ${error}`)
-            }        
-
-
-
+            }       
 
     }
 
-
-
-
-
-
 }
-
-//const carts = new CartManager("/carts.json")
-
-//carts.addCart()
-//console.log(await carts.getProductsByIdCart(0))
-//await carts.addProductToCart(0)
-
-
 
 
 export default CartManager

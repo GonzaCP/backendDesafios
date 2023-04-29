@@ -1,10 +1,19 @@
 [
   {
-    "products": [],
+    "products": [
+      {
+        "quantity": 1,
+        "product": "Red Hot Chili Peppers"
+      },
+      {
+        "quantity": 1,
+        "product": "Pink Floyd"
+      },
+      {
+        "quantity": 1,
+        "product": "Los Piojos"
+      }
+    ],
     "id": 0
-  },
-  {
-    "products": [],
-    "id": 1
   }
 ]
