@@ -18,15 +18,6 @@
     "id": 1
   },
   {
-    "title": "Greta Van Fleet",
-    "description": "The new Zepellin's",
-    "price": 60000,
-    "thumbnail": "Url3",
-    "code": "GRETA257",
-    "stock": 89000,
-    "id": 2
-  },
-  {
     "title": "El Kuelgue",
     "description": "divina comedia",
     "price": 500,
@@ -52,5 +43,14 @@
     "code": "KAP513",
     "stock": 15000,
     "id": 5
+  },
+  {
+    "title": "Los Piojos",
+    "description": "Ciro style",
+    "price": 150,
+    "thumbnail": "Url7",
+    "code": "PIO453",
+    "stock": 15400,
+    "id": 6
   }
 ]

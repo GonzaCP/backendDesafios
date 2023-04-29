@@ -6,11 +6,15 @@ const router = Router()
 const productos = new ProductManager("/products.json")
 
 
-
+// middleware local
+function pruebaMiddleware(req, res, next) {
+    console.log("Middleware local --> products.routes.js")
+    next()
+}
 
 // COPIAR A ROUTER.PRODUCTS.JS
 // .get ---> DONE
-router.get('/', async(req, res) => {    
+router.get('/', pruebaMiddleware ,async(req, res) => {    
     try {      
         const products = await productos.getProducts()       
         res.send(products)      

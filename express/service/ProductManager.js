@@ -37,7 +37,12 @@ class ProductManager {
         try {
             let readProduct = await this.fs.promises.readFile(this.fileName, "utf-8")          
             let readProductParse = JSON.parse(readProduct)
+
+            if(readProductParse.length === 0) {
+            product.id = 0
+            } else {
             product.id = readProductParse[readProductParse.length - 1].id  + 1
+            }            
             let busquedaCode = readProductParse.some((product => product.code === code))
             if(busquedaCode) {
                 throw Error ("Mismo código")
@@ -45,7 +50,7 @@ class ProductManager {
             readProductParse.push(product)
             await fs.promises.writeFile(this.fileName, JSON.stringify(readProductParse, null, 2))
         } catch (error) {
-             throw Error ("No se puede agregar el producto.")
+             throw Error (`No se puede agregar el producto: ${error}.`)
         }         
 
     }
@@ -67,7 +72,7 @@ class ProductManager {
                 throw Error ("El id recibido no coincide")
             }
         } catch (error) {
-            throw Error ("El id recibido no coincide")
+            throw Error (`El id recibido no coincide: ${error}`)
         } 
     }
 
@@ -85,8 +90,8 @@ class ProductManager {
 
             await fs.promises.writeFile(this.fileName, JSON.stringify(readProductParse, null, 2))                
             
-        } catch {
-            throw Error ("El id recibido no coincide")
+        } catch (error) {
+            throw Error (`El id recibido no coincide: ${error}`)
         }
     }
 
@@ -102,8 +107,8 @@ class ProductManager {
             } else {
                 throw Error ("Ningún producto contiene el id recibido.")
             }       
-        } catch {
-            throw Error ("El id recibido no coincide")
+        } catch (error){
+            throw Error (`El id recibido no coincide: ${error}`)
         } 
     }
 
