@@ -1,6 +1,5 @@
 import { Router } from "express";   
 import CartManager from "../../service/CartManager.js";
-import ProductManager from "../../service/ProductManager.js";
 import fs from "fs"
 
 const router = Router()
@@ -19,7 +18,16 @@ pathValidation("./files/carts.json")
 
 // Instancio la clase
 const carts = new CartManager("/carts.json")
-const products = new ProductManager("/products.json")
+
+
+
+// #prueba
+router.get('/', async(req, res) => {
+    let carritos =  await carts.getCarts()   
+    res.send({carritos})  
+})
+
+
 
 
 router.post('/', async(req, res) => {
@@ -46,17 +54,13 @@ router.get('/:cid', async(req, res) => {
 router.post('/:cid/product/:pid', async(req, res) => {
     
     try {
-        const carritoId = await carts.addProductToCart(parseInt(req.params.cid), parseInt(req.params.pid))        
-        
-        if(!carritoId) {
-          
-            res.status(202).send({ status: "ERROR", error: `el id: ${cid} no coincide.` })
-        }
+        const carritoId = await carts.addProductToCart(parseInt(req.params.cid), parseInt(req.params.pid))                   
 
         res.status(201).send({mensaje: "Producto agregado con éxito!"});     
 
     } catch (error) {
-        return res.status(202).send({ status: "ERROR", error: "error" })
+        console.log(error)
+        return res.status(202).send({ status: "ERROR", error: error })
     }
     
 

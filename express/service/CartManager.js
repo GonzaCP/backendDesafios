@@ -11,6 +11,7 @@ class CartManager {
         this.fs = fs
     }        
 
+   
     addCart = async() => {       
         let newCart = {
             products: []
@@ -45,6 +46,18 @@ class CartManager {
             throw Error (`El id recibido no coincide: ${error}`)
         }        
     }
+
+    getCarts = async() => {
+        try {
+            let readCart = await this.fs.promises.readFile(this.fileName, "utf-8")          
+            let readCartParse = JSON.parse(readCart)
+            return readCartParse
+        } catch(error) {
+            throw Error (`${error}`)
+        }
+
+    }
+
     
     addProductToCart = async(idCart, idProd) => {
         try {
@@ -55,25 +68,26 @@ class CartManager {
                 throw Error ("id not found")                
             } 
 
-            let findProduct = await products.getProductById(idProd)
-            if(!findProduct) {
-                throw Error ("idPro not found")
-            }                   
-
+            let findProduct = await products.getProductById(idProd)        
+           
             let onlyOne = findProduct.title
             let newProduct = {
                 quantity: 1,
                 product: onlyOne
-            }           
-            
+            }         
+
+            let busquedaTitle = findId.products.find((product => product.product === findProduct.title))  
+            if (busquedaTitle) {   
+                busquedaTitle.quantity++ 
+                return await fs.promises.writeFile(this.fileName, JSON.stringify(readCartParse, null, 2))     
+            } 
 
             findId.products.push(newProduct)
-            await fs.promises.writeFile(this.fileName, JSON.stringify(readCartParse, null, 2))                                   
+            await fs.promises.writeFile(this.fileName, JSON.stringify(readCartParse, null, 2)) 
           
             } catch (error) {
                 throw Error (`El id recibido no coincide: ${error}`)
-            }       
-
+            }      
     }
 
 }
